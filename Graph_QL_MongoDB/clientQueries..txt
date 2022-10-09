@@ -1,0 +1,149 @@
+# Write your query or mutation here
+1.
+query getAllUsers {
+  users{
+    _id
+    firstName
+    password
+    quotes{
+      name
+      
+    }
+  }
+  }
+
+  query getProfile {
+  myProfile{
+    _id
+    firstName
+    password
+  }
+  }
+  {
+  "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI0YmI4YjJhZTg2MTFhYzU5ODAyZDkiLCJpYXQiOjE2NjMzNTQ0MTN9.sM7-gz-q0P6Eb453vxu2VAF7PmdlWmnuQDkZHFhGlKc"
+}
+
+
+2.
+query getAllQuotes {
+  quote{
+    name
+     by    {
+      _id
+      firstName
+    }    
+  }
+}
+
+3.
+query getAllQuotes {
+  quote{
+    name
+     by    {
+      firstName
+    }    
+  }
+}
+
+4.
+query getOneUser {
+  user(_id:"1234"){
+     _id
+    firstName
+    password
+    quotes{
+      name
+      by
+    }
+  }
+}
+
+5.
+query userQuote {
+  userQuotes(by:"1234"){
+     name
+      by
+  }
+}
+
+6.
+Query Variables
+First we have to store that variable in query variables
+{
+  "userId":"1234"
+}
+Then we can use it
+query userQuote($userId:ID!) {
+  userQuotes(by:$userId){
+     name
+      by{
+        firstName
+      }
+  }
+}
+{
+  "userId":"1234"
+}
+query getOneUser($userId:ID!) {
+  user(_id:$userId){
+     _id
+    firstName
+    password
+    quotes{
+      name
+      by
+    }
+  }
+}
+
+Mutation
+7
+mutation {
+  signupUserDummy(firstName:"kaudhal",lastName:"Panchal",email:"kaushal91198@gmail.com",password:"123456")
+    {
+     _id
+    email
+    firstName
+    lastName
+  }
+}
+
+Query Variables
+mutation signUpUser($userNew:UserSignUpInput) {
+  signupUser(userNew:$userNew)
+    {
+     _id
+    email
+    firstName
+    lastName
+  }
+}
+{
+  "userNew":{"firstName":"kaudhal","lastName":"Panchal","email":"kaushal91198@gmail.com","password":"123456"}
+}
+
+mutation signInUser($userNew:UserSignInInput!) {
+  user:signInUser(userNew:$userNew){
+    token
+  }
+}
+{
+  "userNew":{"email":"kaushal91198@gmail.com","password":"123456"}
+}
+
+mutation createQuote {
+ createQuote(name:"You only live once, but if you do it right, once is enough.")
+}
+{
+  "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzFmNDhmZjE1OTljZTU5NTUxN2Q4M2MiLCJpYXQiOjE2NjMwOTMwODN9.zq49P-sqyoENPajyfqSBSczHLcIkQVhvampmA7DPPcc"
+}
+
+mutation signInUser($name:String!) {
+  createQuote(name:$name)
+  }
+  {
+  "name"::"Life is what happens when you're busy making other plans"
+}
+  {
+  "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzFmNDhmZjE1OTljZTU5NTUxN2Q4M2MiLCJpYXQiOjE2NjMwOTMwODN9.zq49P-sqyoENPajyfqSBSczHLcIkQVhvampmA7DPPcc"
+}
